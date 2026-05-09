@@ -32,7 +32,7 @@ class Order(models.Model):
     address_line2 = models.CharField(max_length=255, blank=True, default="")
     city = models.CharField(max_length=120)
     postal_code = models.CharField(max_length=32, blank=True, default="")
-    country = models.CharField(max_length=120)
+    country = models.CharField(max_length=120, blank=True, default="")
 
     note = models.TextField(blank=True, default="")
     subtotal = models.DecimalField(max_digits=12, decimal_places=2, default=Decimal("0.00"))
@@ -63,9 +63,11 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    product = models.ForeignKey(
+        Product, on_delete=models.SET_NULL, null=True, blank=True
+    )
     product_name = models.CharField(max_length=200)
-    product_sku = models.CharField(max_length=64)
+    product_sku = models.CharField(max_length=64, blank=True, default="")
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField()
 

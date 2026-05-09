@@ -4,67 +4,91 @@ from .models import Brand, Category, Product, ProductImage
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    product_count = serializers.IntegerField(read_only=True)
+    id = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
-        fields = ("id", "name", "slug", "description", "product_count")
+        fields = ("id", "name", "slug", "description")
+
+    def get_id(self, obj):
+        return str(obj.id)
 
 
 class BrandSerializer(serializers.ModelSerializer):
+    id = serializers.SerializerMethodField()
+
     class Meta:
         model = Brand
-        fields = ("id", "name", "slug", "logo")
+        fields = ("id", "name", "slug")
+
+    def get_id(self, obj):
+        return str(obj.id)
 
 
-class ProductImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductImage
-        fields = ("id", "image", "alt", "is_primary", "order")
+def _primary_image_url(obj, request):
+    primary = next((i for i in obj.images.all() if i.is_primary), None)
+    if not primary:
+        primary = obj.images.first() if obj.images.exists() else None
+    if primary and primary.image:
+        url = primary.image.url
+        return request.build_absolute_uri(url) if request else url
+    return ""
 
 
-class ProductListSerializer(serializers.ModelSerializer):
-    category = serializers.SlugRelatedField(slug_field="slug", read_only=True)
-    brand = serializers.SlugRelatedField(slug_field="slug", read_only=True)
-    primary_image = serializers.SerializerMethodField()
-    effective_price = serializers.DecimalField(
-        max_digits=10, decimal_places=2, read_only=True
-    )
-    is_on_sale = serializers.BooleanField(read_only=True)
+def _badges(obj):
+    badges = []
+    if obj.is_on_sale:
+        badges.append({"label": "Sale", "variant": "sale"})
+        discount = int(round((1 - float(obj.sale_price) / float(obj.price)) * 100))
+        if discount:
+            badges.append({"label": f"-{discount}%", "variant": "default"})
+    elif obj.is_featured:
+        badges.append({"label": "New", "variant": "new"})
+    return badges
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    """FE-aligned Product shape: id is string, price is the effective price,
+    originalPrice (camelCase) holds the strike-through value when on sale."""
+
+    id = serializers.SerializerMethodField()
+    price = serializers.SerializerMethodField()
+    originalPrice = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
+    sold = serializers.SerializerMethodField()
+    available = serializers.IntegerField(source="stock", read_only=True)
+    badges = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
         fields = (
             "id",
-            "name",
             "slug",
-            "short_description",
+            "name",
             "price",
-            "sale_price",
-            "effective_price",
-            "is_on_sale",
-            "stock",
-            "is_featured",
-            "category",
-            "brand",
-            "primary_image",
+            "originalPrice",
+            "image",
+            "sold",
+            "available",
+            "badges",
+            "description",
         )
 
-    def get_primary_image(self, obj):
-        primary = next((i for i in obj.images.all() if i.is_primary), None)
-        if not primary:
-            primary = obj.images.first() if obj.images.exists() else None
-        if primary and primary.image:
-            request = self.context.get("request")
-            url = primary.image.url
-            return request.build_absolute_uri(url) if request else url
-        return None
+    def get_id(self, obj):
+        return str(obj.id)
 
+    def get_price(self, obj):
+        return float(obj.effective_price)
 
-class ProductDetailSerializer(ProductListSerializer):
-    category = CategorySerializer(read_only=True)
-    brand = BrandSerializer(read_only=True)
-    images = ProductImageSerializer(many=True, read_only=True)
+    def get_originalPrice(self, obj):
+        return float(obj.price) if obj.is_on_sale else None
 
-    class Meta(ProductListSerializer.Meta):
-        fields = ProductListSerializer.Meta.fields + ("description", "sku", "images")
+    def get_image(self, obj):
+        request = self.context.get("request")
+        return _primary_image_url(obj, request)
+
+    def get_sold(self, obj):
+        return 0  # Placeholder until order analytics is wired in.
+
+    def get_badges(self, obj):
+        return _badges(obj)

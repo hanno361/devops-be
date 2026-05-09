@@ -1,9 +1,16 @@
 from django.urls import include, path
+
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
+
+from apps.accounts.views import LoginView, MeView, RegisterView
+from apps.blog.views import BlogPostDetailView, BlogPostListView
+from apps.catalog.views import ProductDetailView, ProductListView
+from apps.orders.views import OrderDetailView, OrderListCreateView
+from apps.pages.views import AboutPageView, ContactMessageCreateView, FAQListView
 
 urlpatterns = [
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
@@ -17,11 +24,30 @@ urlpatterns = [
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
-    path("auth/", include("apps.accounts.urls")),
-    path("catalog/", include("apps.catalog.urls")),
-    path("blog/", include("apps.blog.urls")),
-    path("pages/", include("apps.pages.urls")),
+
+    # Auth (FE: POST /auth/login, /auth/register; GET /auth/me)
+    path("auth/login", LoginView.as_view(), name="login"),
+    path("auth/register", RegisterView.as_view(), name="register"),
+    path("auth/me", MeView.as_view(), name="me"),
+
+    # Catalog
+    path("products", ProductListView.as_view(), name="product-list"),
+    path("products/<slug:slug>", ProductDetailView.as_view(), name="product-detail"),
+
+    # Blog
+    path("blog", BlogPostListView.as_view(), name="blog-list"),
+    path("blog/<slug:slug>", BlogPostDetailView.as_view(), name="blog-detail"),
+
+    # Pages
+    path("faq", FAQListView.as_view(), name="faq-list"),
+    path("about", AboutPageView.as_view(), name="about"),
+    path("contact", ContactMessageCreateView.as_view(), name="contact-create"),
+
+    # Orders
+    path("orders", OrderListCreateView.as_view(), name="orders"),
+    path("orders/<str:number>", OrderDetailView.as_view(), name="order-detail"),
+
+    # Internal (not consumed by FE; kept available)
     path("cart/", include("apps.cart.urls")),
     path("wishlist/", include("apps.wishlist.urls")),
-    path("orders/", include("apps.orders.urls")),
 ]

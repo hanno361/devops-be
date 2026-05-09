@@ -1,50 +1,33 @@
 from rest_framework import serializers
 
-from .models import FAQ, AboutPage, ContactMessage, TeamMember
+from .models import FAQ, AboutPage, ContactMessage
 
 
 class FAQSerializer(serializers.ModelSerializer):
+    id = serializers.SerializerMethodField()
+
     class Meta:
         model = FAQ
-        fields = ("id", "question", "answer", "order")
+        fields = ("id", "question", "answer")
 
-
-class TeamMemberSerializer(serializers.ModelSerializer):
-    photo_url = serializers.SerializerMethodField()
-
-    class Meta:
-        model = TeamMember
-        fields = ("id", "name", "role", "bio", "photo_url", "order")
-
-    def get_photo_url(self, obj):
-        if not obj.photo:
-            return None
-        request = self.context.get("request")
-        return request.build_absolute_uri(obj.photo.url) if request else obj.photo.url
+    def get_id(self, obj):
+        return str(obj.id)
 
 
 class AboutPageSerializer(serializers.ModelSerializer):
-    cover_url = serializers.SerializerMethodField()
-    team = serializers.SerializerMethodField()
+    body = serializers.SerializerMethodField()
 
     class Meta:
         model = AboutPage
-        fields = ("id", "title", "intro", "body", "cover_url", "team", "updated_at")
+        fields = ("title", "intro", "body")
 
-    def get_cover_url(self, obj):
-        if not obj.cover:
-            return None
-        request = self.context.get("request")
-        return request.build_absolute_uri(obj.cover.url) if request else obj.cover.url
-
-    def get_team(self, obj):
-        return TeamMemberSerializer(
-            TeamMember.objects.all(), many=True, context=self.context
-        ).data
+    def get_body(self, obj):
+        if not obj.body:
+            return []
+        return [p.strip() for p in obj.body.split("\n\n") if p.strip()]
 
 
 class ContactMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactMessage
-        fields = ("id", "name", "email", "subject", "message", "created_at")
-        read_only_fields = ("id", "created_at")
+        fields = ("name", "email", "subject", "message")

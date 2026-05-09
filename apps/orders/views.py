@@ -1,45 +1,51 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from .models import Order
-from .serializers import CheckoutSerializer, OrderSerializer
-from .services import create_order_from_cart
+from .serializers import (
+    CheckoutRequestSerializer,
+    OrderReadSerializer,
+)
+from .services import create_order_from_payload
 
 
-class CheckoutView(APIView):
+class OrderListCreateView(generics.ListCreateAPIView):
+    """GET  /orders -> ApiListResponse<Order> (paginated)
+    POST /orders -> ApiResponse<Order> (creates from payload).
+    """
+
+    serializer_class = OrderReadSerializer
     permission_classes = [permissions.IsAuthenticated]
-
-    def post(self, request):
-        serializer = CheckoutSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        data = serializer.validated_data
-        order = create_order_from_cart(
-            user=request.user,
-            address={k: v for k, v in data.items() if k != "note"},
-            note=data.get("note", ""),
-        )
-        return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
-
-
-class MyOrderListView(generics.ListAPIView):
-    serializer_class = OrderSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    ordering_fields = ("created_at", "total")
+    ordering = ("-created_at",)
 
     def get_queryset(self):
         return (
-            Order.objects.filter(user=self.request.user)
-            .prefetch_related("items")
+            Order.objects.filter(user=self.request.user).prefetch_related("items")
+        )
+
+    def create(self, request, *args, **kwargs):
+        serializer = CheckoutRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        order = create_order_from_payload(
+            user=request.user,
+            items=serializer.validated_data["items"],
+            shipping=serializer.validated_data["shipping"],
+        )
+        return Response(
+            {"data": OrderReadSerializer(order).data},
+            status=status.HTTP_201_CREATED,
         )
 
 
-class MyOrderDetailView(generics.RetrieveAPIView):
-    serializer_class = OrderSerializer
+class OrderDetailView(generics.RetrieveAPIView):
+    serializer_class = OrderReadSerializer
     permission_classes = [permissions.IsAuthenticated]
     lookup_field = "number"
 
     def get_queryset(self):
-        return (
-            Order.objects.filter(user=self.request.user)
-            .prefetch_related("items")
-        )
+        return Order.objects.filter(user=self.request.user).prefetch_related("items")
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        return Response({"data": self.get_serializer(instance).data})

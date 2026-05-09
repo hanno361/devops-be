@@ -1,48 +1,41 @@
 from rest_framework import serializers
 
-from .models import BlogCategory, BlogPost, BlogTag
+from .models import BlogPost
 
 
-class BlogCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BlogCategory
-        fields = ("id", "name", "slug")
-
-
-class BlogTagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BlogTag
-        fields = ("id", "name", "slug")
-
-
-class BlogPostListSerializer(serializers.ModelSerializer):
-    category = serializers.SlugRelatedField(slug_field="slug", read_only=True)
-    author = serializers.StringRelatedField(read_only=True)
-    cover_url = serializers.SerializerMethodField()
+class BlogPostSerializer(serializers.ModelSerializer):
+    id = serializers.SerializerMethodField()
+    date = serializers.SerializerMethodField()
+    comments = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
+    content = serializers.CharField(source="body", read_only=True)
 
     class Meta:
         model = BlogPost
         fields = (
             "id",
-            "title",
             "slug",
+            "title",
+            "date",
+            "comments",
             "excerpt",
-            "category",
-            "author",
-            "cover_url",
-            "published_at",
+            "image",
+            "content",
         )
 
-    def get_cover_url(self, obj):
+    def get_id(self, obj):
+        return str(obj.id)
+
+    def get_date(self, obj):
+        target = obj.published_at or obj.created_at
+        return target.strftime("%d %B, %Y")
+
+    def get_comments(self, obj):
+        return 0  # No commenting feature yet — return 0 to keep the FE happy.
+
+    def get_image(self, obj):
         if not obj.cover:
-            return None
+            return ""
         request = self.context.get("request")
-        return request.build_absolute_uri(obj.cover.url) if request else obj.cover.url
-
-
-class BlogPostDetailSerializer(BlogPostListSerializer):
-    category = BlogCategorySerializer(read_only=True)
-    tags = BlogTagSerializer(many=True, read_only=True)
-
-    class Meta(BlogPostListSerializer.Meta):
-        fields = BlogPostListSerializer.Meta.fields + ("body", "tags")
+        url = obj.cover.url
+        return request.build_absolute_uri(url) if request else url

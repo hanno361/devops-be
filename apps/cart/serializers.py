@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
 from apps.catalog.models import Product
-from apps.catalog.serializers import ProductListSerializer
+from apps.catalog.serializers import ProductSerializer
 
 from .models import Cart, CartItem
 
 
 class CartItemSerializer(serializers.ModelSerializer):
-    product = ProductListSerializer(read_only=True)
+    product = ProductSerializer(read_only=True)
     product_id = serializers.PrimaryKeyRelatedField(
         queryset=Product.objects.filter(is_active=True),
         source="product",
