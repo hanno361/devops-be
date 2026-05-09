@@ -8,6 +8,7 @@ from django.utils import timezone
 
 from apps.blog.models import BlogCategory, BlogPost, BlogTag
 from apps.catalog.models import Brand, Category, Product
+from apps.home.models import Banner, BannerFeature, FeaturedProduct, HeroSlide
 from apps.pages.models import FAQ, AboutPage, TeamMember
 
 User = get_user_model()
@@ -214,6 +215,62 @@ TEAM = [
 ]
 
 
+HERO_SLIDES = [
+    {
+        "bg": "/images/hero1.webp",
+        "eyebrow": "New collection",
+        "title": "Discover the",
+        "title_span": "Velvet Rose",
+        "body": "Hand-batched in Grasse, aged ninety days for depth.",
+        "cta_label": "Shop now",
+        "cta_href": "/shop",
+    },
+    {
+        "bg": "/images/hero2.webp",
+        "eyebrow": "Limited edition",
+        "title": "Black",
+        "title_span": "Vetiver",
+        "body": "Smoked vetiver and aged leather — a bold statement.",
+        "cta_label": "Explore",
+        "cta_href": "/product/black-vetiver-eau-de-parfum-75ml",
+    },
+]
+
+FEATURED = [
+    {
+        "eyebrow": "Best seller",
+        "title": "Velvet Rose Eau de Parfum",
+        "description": "Romantic Damask rose grounded by smoky musk.",
+        "image_src": "/images/featured1.webp",
+        "image_alt": "Velvet Rose bottle",
+        "cta_href": "/product/velvet-rose-eau-de-parfum-50ml",
+        "image_right": False,
+    },
+    {
+        "eyebrow": "New",
+        "title": "Aqua Citrus Eau de Toilette",
+        "description": "A bright splash of bergamot and sea salt.",
+        "image_src": "/images/featured2.webp",
+        "image_alt": "Aqua Citrus bottle",
+        "cta_href": "/product/aqua-citrus-eau-de-toilette-100ml",
+        "image_right": True,
+    },
+]
+
+BANNER = {
+    "eyebrow": "Atelier story",
+    "title": "Slow-batched parfums, honest ingredients.",
+    "background_image": "/images/banner.webp",
+    "cta_label": "About Sinp",
+    "cta_href": "/about",
+    "features": [
+        {"icon": "leaf", "label": "Cruelty-free"},
+        {"icon": "globe", "label": "Worldwide shipping"},
+        {"icon": "shield", "label": "90-day aged"},
+    ],
+}
+
+
 class Command(BaseCommand):
     help = "Seed the database with demo catalog, blog and pages content."
 
@@ -301,5 +358,33 @@ class Command(BaseCommand):
             TeamMember.objects.get_or_create(
                 name=name, defaults={"role": role, "bio": bio, "order": idx}
             )
+
+        for idx, data in enumerate(HERO_SLIDES):
+            HeroSlide.objects.get_or_create(
+                title=data["title"],
+                defaults={**data, "order": idx},
+            )
+
+        for idx, data in enumerate(FEATURED):
+            FeaturedProduct.objects.get_or_create(
+                title=data["title"],
+                defaults={**data, "order": idx},
+            )
+
+        banner, _ = Banner.objects.get_or_create(
+            id=1,
+            defaults={
+                "eyebrow": BANNER["eyebrow"],
+                "title": BANNER["title"],
+                "background_image": BANNER["background_image"],
+                "cta_label": BANNER["cta_label"],
+                "cta_href": BANNER["cta_href"],
+            },
+        )
+        if not banner.features.exists():
+            for idx, feat in enumerate(BANNER["features"]):
+                BannerFeature.objects.create(
+                    banner=banner, icon=feat["icon"], label=feat["label"], order=idx
+                )
 
         self.stdout.write(self.style.SUCCESS("Seed complete."))

@@ -10,6 +10,13 @@ from apps.accounts.views import LoginView, MeView, RegisterView
 from apps.blog.views import BlogPostDetailView, BlogPostListView
 from apps.catalog.views import ProductDetailView, ProductListView
 from apps.orders.views import OrderDetailView, OrderListCreateView
+from apps.home.views import (
+    BannerView,
+    FeaturedProductListView,
+    HeroSlideListView,
+    HomeBlogView,
+    HomeProductsView,
+)
 from apps.pages.views import AboutPageView, ContactMessageCreateView, FAQListView
 
 urlpatterns = [
@@ -42,6 +49,13 @@ urlpatterns = [
     path("faq", FAQListView.as_view(), name="faq-list"),
     path("about", AboutPageView.as_view(), name="about"),
     path("contact", ContactMessageCreateView.as_view(), name="contact-create"),
+
+    # Home content
+    path("home/hero-slides", HeroSlideListView.as_view(), name="home-hero-slides"),
+    path("home/featured-products", FeaturedProductListView.as_view(), name="home-featured-products"),
+    path("home/banner", BannerView.as_view(), name="home-banner"),
+    path("home/products", HomeProductsView.as_view(), name="home-products"),
+    path("home/blog", HomeBlogView.as_view(), name="home-blog"),
 
     # Orders
     path("orders", OrderListCreateView.as_view(), name="orders"),
