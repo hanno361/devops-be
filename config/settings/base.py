@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_filters",
     # Local
+    "apps.core",
     "apps.accounts",
     "apps.catalog",
     "apps.blog",
@@ -107,11 +108,12 @@ REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.SearchFilter",
-        "rest_framework.filters.OrderingFilter",
+        "apps.core.filters.SortFilter",
     ),
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_PAGINATION_CLASS": "apps.core.pagination.EnvelopePagination",
     "PAGE_SIZE": 12,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "EXCEPTION_HANDLER": "apps.core.exceptions.envelope_exception_handler",
 }
 
 SIMPLE_JWT = {
