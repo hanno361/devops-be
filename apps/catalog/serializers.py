@@ -84,6 +84,8 @@ class ProductSerializer(serializers.ModelSerializer):
         return float(obj.price) if obj.is_on_sale else None
 
     def get_image(self, obj) -> str:
+        if obj.image_url:
+            return obj.image_url
         request = self.context.get("request")
         return _primary_image_url(obj, request)
 

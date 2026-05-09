@@ -36,6 +36,7 @@ PRODUCTS = [
         "sku": "SNP-EDP-VR50",
         "stock": 25,
         "is_featured": True,
+        "image_url": "/images/product1.webp",
     },
     {
         "name": "Black Vetiver Eau de Parfum 75ml",
@@ -48,6 +49,7 @@ PRODUCTS = [
         "sku": "SNP-EDP-BV75",
         "stock": 18,
         "is_featured": True,
+        "image_url": "/images/product2.webp",
     },
     {
         "name": "Aqua Citrus Eau de Toilette 100ml",
@@ -60,6 +62,7 @@ PRODUCTS = [
         "sku": "SNP-EDT-AC100",
         "stock": 40,
         "is_featured": False,
+        "image_url": "/images/product3.webp",
     },
     {
         "name": "Cedar Smoke EDP 50ml",
@@ -72,6 +75,7 @@ PRODUCTS = [
         "sku": "SNP-EDP-CS50",
         "stock": 22,
         "is_featured": False,
+        "image_url": "/images/product4.webp",
     },
     {
         "name": "Body Mist — Lily Garden 200ml",
@@ -84,6 +88,7 @@ PRODUCTS = [
         "sku": "SNP-BM-LG200",
         "stock": 60,
         "is_featured": False,
+        "image_url": "/images/product5.webp",
     },
     {
         "name": "Discovery Set — 5x10ml",
@@ -96,6 +101,7 @@ PRODUCTS = [
         "sku": "SNP-GIFT-DS5",
         "stock": 35,
         "is_featured": True,
+        "image_url": "/images/product1_1.webp",
     },
     {
         "name": "Amber Oud EDP 100ml",
@@ -108,6 +114,7 @@ PRODUCTS = [
         "sku": "SNP-EDP-AO100",
         "stock": 12,
         "is_featured": True,
+        "image_url": "/images/product2_1.webp",
     },
     {
         "name": "Body Lotion — Velvet Rose 250ml",
@@ -120,6 +127,7 @@ PRODUCTS = [
         "sku": "SNP-BL-VR250",
         "stock": 50,
         "is_featured": False,
+        "image_url": "/images/product3_1.webp",
     },
     {
         "name": "Gift Set — His & Hers Duo",
@@ -132,6 +140,7 @@ PRODUCTS = [
         "sku": "SNP-GIFT-HH",
         "stock": 14,
         "is_featured": True,
+        "image_url": "/images/product4_1.webp",
     },
     {
         "name": "Aqua Citrus EDT 50ml Travel",
@@ -144,6 +153,7 @@ PRODUCTS = [
         "sku": "SNP-EDT-AC50",
         "stock": 45,
         "is_featured": False,
+        "image_url": "/images/product5_1.webp",
     },
 ]
 
@@ -156,6 +166,7 @@ BLOG_POSTS = [
         "tags": ["fragrance", "tutorial"],
         "excerpt": "Three rules for building a layered fragrance wardrobe.",
         "body": "Start with a clean base, build with a complementary mist, and finish with a single spritz of EDP on pulse points...",
+        "cover_url": "/images/blog1.webp",
     },
     {
         "title": "Inside the Atelier: Distilling Damask Rose",
@@ -163,6 +174,7 @@ BLOG_POSTS = [
         "tags": ["rose"],
         "excerpt": "A morning at the distillery in Isparta.",
         "body": "Every spring our team travels to Isparta where Damask rose is harvested before dawn...",
+        "cover_url": "/images/blog2.webp",
     },
     {
         "title": "Why Oud is the King of Notes",
@@ -170,6 +182,7 @@ BLOG_POSTS = [
         "tags": ["oud"],
         "excerpt": "From agarwood resin to your bottle.",
         "body": "Oud is the resinous heartwood of the agarwood tree. Its formation is a slow, rare process...",
+        "cover_url": "/images/blog3.webp",
     },
     {
         "title": "Summer Scent Survival Kit",
@@ -177,6 +190,7 @@ BLOG_POSTS = [
         "tags": ["summer", "tutorial"],
         "excerpt": "Light EDTs, body mists and a refreshing trick.",
         "body": "Heat changes how we wear scent. Swap heavy parfums for crisp citrus EDTs...",
+        "cover_url": "/images/blog4.webp",
     },
     {
         "title": "Notes 101: Top, Heart, Base",
@@ -184,6 +198,7 @@ BLOG_POSTS = [
         "tags": ["fragrance"],
         "excerpt": "A 3-minute guide to fragrance pyramids.",
         "body": "Top notes evaporate first — citrus, herbs, light spice. Heart notes are the soul of a scent...",
+        "cover_url": "/images/blog1.webp",
     },
 ]
 
@@ -326,6 +341,7 @@ class Command(BaseCommand):
                     "sale_price": Decimal(data["sale_price"]) if data["sale_price"] else None,
                     "stock": data["stock"],
                     "is_featured": data["is_featured"],
+                    "image_url": data.get("image_url", ""),
                 },
             )
 
@@ -343,6 +359,7 @@ class Command(BaseCommand):
                     "author": author,
                     "excerpt": data["excerpt"],
                     "body": data["body"],
+                    "cover_url": data.get("cover_url", ""),
                     "status": BlogPost.PUBLISHED,
                     "published_at": timezone.now() - timedelta(days=idx * 3),
                 },

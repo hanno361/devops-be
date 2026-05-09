@@ -34,6 +34,8 @@ class BlogPostSerializer(serializers.ModelSerializer):
         return 0
 
     def get_image(self, obj) -> str:
+        if obj.cover_url:
+            return obj.cover_url
         if not obj.cover:
             return ""
         request = self.context.get("request")

@@ -62,6 +62,12 @@ class Product(TimeStampedModel):
     )
     sku = models.CharField(max_length=64, unique=True)
     stock = models.PositiveIntegerField(default=0)
+    image_url = models.CharField(
+        max_length=255,
+        blank=True,
+        default="",
+        help_text="External or static path to a primary image (e.g. /images/product1.webp).",
+    )
     is_featured = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 

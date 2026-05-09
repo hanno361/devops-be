@@ -56,6 +56,12 @@ class BlogPost(models.Model):
     excerpt = models.CharField(max_length=300, blank=True, default="")
     body = models.TextField()
     cover = models.ImageField(upload_to="blog/", blank=True, null=True)
+    cover_url = models.CharField(
+        max_length=255,
+        blank=True,
+        default="",
+        help_text="External or static path to the cover image.",
+    )
     status = models.CharField(max_length=16, choices=STATUS_CHOICES, default=PUBLISHED)
     published_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
