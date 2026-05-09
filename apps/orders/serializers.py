@@ -31,7 +31,7 @@ class OrderReadSerializer(serializers.ModelSerializer):
         return str(obj.id)
 
     def get_date(self, obj):
-        return obj.created_at.strftime("%Y-%m-%d")
+        return obj.created_at.strftime("%d %B, %Y")
 
 
 class CheckoutItemSerializer(serializers.Serializer):
