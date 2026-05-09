@@ -1,0 +1,704 @@
+[
+{
+  "model": "accounts.user",
+  "fields": {
+    "password": "pbkdf2_sha256$720000$zUsiNQlvyisl65qVti92kP$6d+x4pglZiBA+OEjyP8dvTmuhFME2lMMofqJB4pUTMw=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-05-09T13:09:42.417Z",
+    "email": "admin@sinp.local",
+    "phone": "",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.567Z",
+    "updated_at": "2026-05-09T13:09:42.567Z",
+    "name": "Eau de Parfum",
+    "slug": "eau-de-parfum",
+    "description": "Long-lasting parfum collection."
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.568Z",
+    "updated_at": "2026-05-09T13:09:42.568Z",
+    "name": "Eau de Toilette",
+    "slug": "eau-de-toilette",
+    "description": "Lighter toilette scents for daytime."
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.569Z",
+    "updated_at": "2026-05-09T13:09:42.569Z",
+    "name": "Body Care",
+    "slug": "body-care",
+    "description": "Body sprays, lotions and care products."
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.570Z",
+    "updated_at": "2026-05-09T13:09:42.570Z",
+    "name": "Gift Sets",
+    "slug": "gift-sets",
+    "description": "Curated gift bundles."
+  }
+},
+{
+  "model": "catalog.brand",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.571Z",
+    "updated_at": "2026-05-09T13:09:42.571Z",
+    "name": "Sinp Atelier",
+    "slug": "sinp-atelier",
+    "logo": ""
+  }
+},
+{
+  "model": "catalog.brand",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.572Z",
+    "updated_at": "2026-05-09T13:09:42.572Z",
+    "name": "Sinp Noir",
+    "slug": "sinp-noir",
+    "logo": ""
+  }
+},
+{
+  "model": "catalog.brand",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.573Z",
+    "updated_at": "2026-05-09T13:09:42.573Z",
+    "name": "Sinp Aqua",
+    "slug": "sinp-aqua",
+    "logo": ""
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.575Z",
+    "updated_at": "2026-05-09T13:09:42.575Z",
+    "category": 1,
+    "brand": 1,
+    "name": "Velvet Rose Eau de Parfum 50ml",
+    "slug": "velvet-rose-eau-de-parfum-50ml",
+    "short_description": "Romantic rose with a smoky musk base.",
+    "description": "A signature scent built on Damask rose, oud and warm amber. Hand-bottled in Grasse and aged for 90 days for depth.",
+    "price": "129.00",
+    "sale_price": "99.00",
+    "sku": "SNP-EDP-VR50",
+    "stock": 25,
+    "image_url": "/images/product1.webp",
+    "is_featured": true,
+    "is_active": true
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.577Z",
+    "updated_at": "2026-05-09T13:09:42.577Z",
+    "category": 1,
+    "brand": 2,
+    "name": "Black Vetiver Eau de Parfum 75ml",
+    "slug": "black-vetiver-eau-de-parfum-75ml",
+    "short_description": "Deep vetiver with leather facets.",
+    "description": "Smoked vetiver, Haitian roots and aged leather make this a bold, modern parfum.",
+    "price": "159.00",
+    "sale_price": null,
+    "sku": "SNP-EDP-BV75",
+    "stock": 18,
+    "image_url": "/images/product2.webp",
+    "is_featured": true,
+    "is_active": true
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.579Z",
+    "updated_at": "2026-05-09T13:09:42.579Z",
+    "category": 2,
+    "brand": 3,
+    "name": "Aqua Citrus Eau de Toilette 100ml",
+    "slug": "aqua-citrus-eau-de-toilette-100ml",
+    "short_description": "Bright bergamot and sea salt.",
+    "description": "A fresh splash of bergamot, mandarin and sea minerals — perfect for sunny days.",
+    "price": "79.00",
+    "sale_price": "59.00",
+    "sku": "SNP-EDT-AC100",
+    "stock": 40,
+    "image_url": "/images/product3.webp",
+    "is_featured": false,
+    "is_active": true
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.580Z",
+    "updated_at": "2026-05-09T13:09:42.580Z",
+    "category": 1,
+    "brand": 2,
+    "name": "Cedar Smoke EDP 50ml",
+    "slug": "cedar-smoke-edp-50ml",
+    "short_description": "Smoky cedar with warm spice.",
+    "description": "Cedarwood smoke layered with cardamom and saffron.",
+    "price": "119.00",
+    "sale_price": null,
+    "sku": "SNP-EDP-CS50",
+    "stock": 22,
+    "image_url": "/images/product4.webp",
+    "is_featured": false,
+    "is_active": true
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.582Z",
+    "updated_at": "2026-05-09T13:09:42.582Z",
+    "category": 3,
+    "brand": 1,
+    "name": "Body Mist — Lily Garden 200ml",
+    "slug": "body-mist-lily-garden-200ml",
+    "short_description": "Soft daily body mist.",
+    "description": "Lily, white tea and sandalwood in a hydrating mist.",
+    "price": "29.00",
+    "sale_price": null,
+    "sku": "SNP-BM-LG200",
+    "stock": 60,
+    "image_url": "/images/product5.webp",
+    "is_featured": false,
+    "is_active": true
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.583Z",
+    "updated_at": "2026-05-09T13:09:42.583Z",
+    "category": 4,
+    "brand": 1,
+    "name": "Discovery Set — 5x10ml",
+    "slug": "discovery-set-5x10ml",
+    "short_description": "Five signature scents in travel sizes.",
+    "description": "Discover the Sinp range in 5x10ml refillable atomisers.",
+    "price": "69.00",
+    "sale_price": "55.00",
+    "sku": "SNP-GIFT-DS5",
+    "stock": 35,
+    "image_url": "/images/product1_1.webp",
+    "is_featured": true,
+    "is_active": true
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.585Z",
+    "updated_at": "2026-05-09T13:09:42.585Z",
+    "category": 1,
+    "brand": 1,
+    "name": "Amber Oud EDP 100ml",
+    "slug": "amber-oud-edp-100ml",
+    "short_description": "Resinous amber and aged oud.",
+    "description": "A statement parfum centred on Cambodian oud, labdanum and benzoin.",
+    "price": "189.00",
+    "sale_price": null,
+    "sku": "SNP-EDP-AO100",
+    "stock": 12,
+    "image_url": "/images/product2_1.webp",
+    "is_featured": true,
+    "is_active": true
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.586Z",
+    "updated_at": "2026-05-09T13:09:42.586Z",
+    "category": 3,
+    "brand": 1,
+    "name": "Body Lotion — Velvet Rose 250ml",
+    "slug": "body-lotion-velvet-rose-250ml",
+    "short_description": "Layer with the Velvet Rose parfum.",
+    "description": "Rich shea-butter lotion infused with the Velvet Rose accord.",
+    "price": "34.00",
+    "sale_price": null,
+    "sku": "SNP-BL-VR250",
+    "stock": 50,
+    "image_url": "/images/product3_1.webp",
+    "is_featured": false,
+    "is_active": true
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.587Z",
+    "updated_at": "2026-05-09T13:09:42.587Z",
+    "category": 4,
+    "brand": 1,
+    "name": "Gift Set — His & Hers Duo",
+    "slug": "gift-set-his-hers-duo",
+    "short_description": "Velvet Rose and Black Vetiver paired.",
+    "description": "Two of our signature parfums boxed together.",
+    "price": "239.00",
+    "sale_price": "199.00",
+    "sku": "SNP-GIFT-HH",
+    "stock": 14,
+    "image_url": "/images/product4_1.webp",
+    "is_featured": true,
+    "is_active": true
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 10,
+  "fields": {
+    "created_at": "2026-05-09T13:09:42.589Z",
+    "updated_at": "2026-05-09T13:09:42.589Z",
+    "category": 2,
+    "brand": 3,
+    "name": "Aqua Citrus EDT 50ml Travel",
+    "slug": "aqua-citrus-edt-50ml-travel",
+    "short_description": "Pocket-sized fresh splash.",
+    "description": "Travel-sized 50ml of our best-selling Aqua Citrus EDT.",
+    "price": "49.00",
+    "sale_price": null,
+    "sku": "SNP-EDT-AC50",
+    "stock": 45,
+    "image_url": "/images/product5_1.webp",
+    "is_featured": false,
+    "is_active": true
+  }
+},
+{
+  "model": "blog.blogcategory",
+  "pk": 1,
+  "fields": {
+    "name": "Notes & Stories",
+    "slug": "notes-stories"
+  }
+},
+{
+  "model": "blog.blogcategory",
+  "pk": 2,
+  "fields": {
+    "name": "Behind the Bottle",
+    "slug": "behind-the-bottle"
+  }
+},
+{
+  "model": "blog.blogcategory",
+  "pk": 3,
+  "fields": {
+    "name": "Care Guide",
+    "slug": "care-guide"
+  }
+},
+{
+  "model": "blog.blogtag",
+  "pk": 1,
+  "fields": {
+    "name": "fragrance",
+    "slug": "fragrance"
+  }
+},
+{
+  "model": "blog.blogtag",
+  "pk": 2,
+  "fields": {
+    "name": "rose",
+    "slug": "rose"
+  }
+},
+{
+  "model": "blog.blogtag",
+  "pk": 3,
+  "fields": {
+    "name": "oud",
+    "slug": "oud"
+  }
+},
+{
+  "model": "blog.blogtag",
+  "pk": 4,
+  "fields": {
+    "name": "summer",
+    "slug": "summer"
+  }
+},
+{
+  "model": "blog.blogtag",
+  "pk": 5,
+  "fields": {
+    "name": "tutorial",
+    "slug": "tutorial"
+  }
+},
+{
+  "model": "blog.blogpost",
+  "pk": 1,
+  "fields": {
+    "category": 3,
+    "author": [
+      "admin@sinp.local"
+    ],
+    "title": "How to Layer a Signature Scent",
+    "slug": "how-to-layer-a-signature-scent",
+    "excerpt": "Three rules for building a layered fragrance wardrobe.",
+    "body": "Start with a clean base, build with a complementary mist, and finish with a single spritz of EDP on pulse points...",
+    "cover": "",
+    "cover_url": "/images/blog1.webp",
+    "status": "published",
+    "published_at": "2026-05-09T13:09:42.596Z",
+    "created_at": "2026-05-09T13:09:42.597Z",
+    "updated_at": "2026-05-09T13:09:42.597Z",
+    "tags": [
+      1,
+      5
+    ]
+  }
+},
+{
+  "model": "blog.blogpost",
+  "pk": 2,
+  "fields": {
+    "category": 2,
+    "author": [
+      "admin@sinp.local"
+    ],
+    "title": "Inside the Atelier: Distilling Damask Rose",
+    "slug": "inside-the-atelier-distilling-damask-rose",
+    "excerpt": "A morning at the distillery in Isparta.",
+    "body": "Every spring our team travels to Isparta where Damask rose is harvested before dawn...",
+    "cover": "",
+    "cover_url": "/images/blog2.webp",
+    "status": "published",
+    "published_at": "2026-05-06T13:09:42.600Z",
+    "created_at": "2026-05-09T13:09:42.601Z",
+    "updated_at": "2026-05-09T13:09:42.601Z",
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "blog.blogpost",
+  "pk": 3,
+  "fields": {
+    "category": 1,
+    "author": [
+      "admin@sinp.local"
+    ],
+    "title": "Why Oud is the King of Notes",
+    "slug": "why-oud-is-the-king-of-notes",
+    "excerpt": "From agarwood resin to your bottle.",
+    "body": "Oud is the resinous heartwood of the agarwood tree. Its formation is a slow, rare process...",
+    "cover": "",
+    "cover_url": "/images/blog3.webp",
+    "status": "published",
+    "published_at": "2026-05-03T13:09:42.602Z",
+    "created_at": "2026-05-09T13:09:42.603Z",
+    "updated_at": "2026-05-09T13:09:42.603Z",
+    "tags": [
+      3
+    ]
+  }
+},
+{
+  "model": "blog.blogpost",
+  "pk": 4,
+  "fields": {
+    "category": 3,
+    "author": [
+      "admin@sinp.local"
+    ],
+    "title": "Summer Scent Survival Kit",
+    "slug": "summer-scent-survival-kit",
+    "excerpt": "Light EDTs, body mists and a refreshing trick.",
+    "body": "Heat changes how we wear scent. Swap heavy parfums for crisp citrus EDTs...",
+    "cover": "",
+    "cover_url": "/images/blog4.webp",
+    "status": "published",
+    "published_at": "2026-04-30T13:09:42.604Z",
+    "created_at": "2026-05-09T13:09:42.605Z",
+    "updated_at": "2026-05-09T13:09:42.605Z",
+    "tags": [
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "blog.blogpost",
+  "pk": 5,
+  "fields": {
+    "category": 1,
+    "author": [
+      "admin@sinp.local"
+    ],
+    "title": "Notes 101: Top, Heart, Base",
+    "slug": "notes-101-top-heart-base",
+    "excerpt": "A 3-minute guide to fragrance pyramids.",
+    "body": "Top notes evaporate first — citrus, herbs, light spice. Heart notes are the soul of a scent...",
+    "cover": "",
+    "cover_url": "/images/blog1.webp",
+    "status": "published",
+    "published_at": "2026-04-27T13:09:42.606Z",
+    "created_at": "2026-05-09T13:09:42.607Z",
+    "updated_at": "2026-05-09T13:09:42.607Z",
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "pages.faq",
+  "pk": 1,
+  "fields": {
+    "question": "Do you ship internationally?",
+    "answer": "Yes, we ship to most countries within 3-7 business days.",
+    "order": 0,
+    "is_active": true
+  }
+},
+{
+  "model": "pages.faq",
+  "pk": 2,
+  "fields": {
+    "question": "How can I track my order?",
+    "answer": "Once shipped, you'll receive a tracking link by email.",
+    "order": 1,
+    "is_active": true
+  }
+},
+{
+  "model": "pages.faq",
+  "pk": 3,
+  "fields": {
+    "question": "Are samples available?",
+    "answer": "Yes, the Discovery Set lets you try five signature scents.",
+    "order": 2,
+    "is_active": true
+  }
+},
+{
+  "model": "pages.faq",
+  "pk": 4,
+  "fields": {
+    "question": "Can I return a fragrance?",
+    "answer": "Unopened bottles can be returned within 14 days for a full refund.",
+    "order": 3,
+    "is_active": true
+  }
+},
+{
+  "model": "pages.faq",
+  "pk": 5,
+  "fields": {
+    "question": "How should I store my parfum?",
+    "answer": "Keep it in a cool, dark place — avoid direct sunlight and heat.",
+    "order": 4,
+    "is_active": true
+  }
+},
+{
+  "model": "pages.faq",
+  "pk": 6,
+  "fields": {
+    "question": "How long does an EDP last?",
+    "answer": "Most Sinp EDPs last 6-10 hours on skin and longer on clothing.",
+    "order": 5,
+    "is_active": true
+  }
+},
+{
+  "model": "pages.faq",
+  "pk": 7,
+  "fields": {
+    "question": "Are your products cruelty-free?",
+    "answer": "Absolutely. Sinp is fully cruelty-free and Leaping-Bunny certified.",
+    "order": 6,
+    "is_active": true
+  }
+},
+{
+  "model": "pages.aboutpage",
+  "pk": 1,
+  "fields": {
+    "title": "About Sinp",
+    "intro": "A small atelier crafting modern parfums with old-world technique.",
+    "body": "Sinp was founded in 2019 with a simple promise: build fragrances slowly, age them deeply, and bottle them honestly. Every Sinp parfum is hand-batched in Grasse, France, and aged for a minimum of 90 days before it reaches you. We work directly with growers across Bulgaria, Türkiye and Madagascar to source rose, citrus and vanilla at peak quality.",
+    "cover": "",
+    "updated_at": "2026-05-09T13:09:42.614Z"
+  }
+},
+{
+  "model": "pages.teammember",
+  "pk": 1,
+  "fields": {
+    "name": "Aylin Demir",
+    "role": "Master Perfumer",
+    "bio": "Trained in Grasse, leads the Sinp atelier.",
+    "photo": "",
+    "order": 0
+  }
+},
+{
+  "model": "pages.teammember",
+  "pk": 2,
+  "fields": {
+    "name": "Marco Russo",
+    "role": "Lead Distiller",
+    "bio": "Manages our small-batch distillation process.",
+    "photo": "",
+    "order": 1
+  }
+},
+{
+  "model": "pages.teammember",
+  "pk": 3,
+  "fields": {
+    "name": "Sara Lin",
+    "role": "Head of Experience",
+    "bio": "Designs every Sinp customer touchpoint.",
+    "photo": "",
+    "order": 2
+  }
+},
+{
+  "model": "home.heroslide",
+  "pk": 1,
+  "fields": {
+    "bg": "/images/slide1.webp",
+    "eyebrow": "New collection",
+    "title": "Discover the",
+    "title_span": "Velvet Rose",
+    "body": "Hand-batched in Grasse, aged ninety days for depth.",
+    "cta_label": "Shop now",
+    "cta_href": "/shop",
+    "order": 0,
+    "is_active": true
+  }
+},
+{
+  "model": "home.heroslide",
+  "pk": 2,
+  "fields": {
+    "bg": "/images/slide2.webp",
+    "eyebrow": "Limited edition",
+    "title": "Black",
+    "title_span": "Vetiver",
+    "body": "Smoked vetiver and aged leather — a bold statement.",
+    "cta_label": "Explore",
+    "cta_href": "/product/black-vetiver-eau-de-parfum-75ml",
+    "order": 1,
+    "is_active": true
+  }
+},
+{
+  "model": "home.featuredproduct",
+  "pk": 1,
+  "fields": {
+    "eyebrow": "Best seller",
+    "title": "Velvet Rose Eau de Parfum",
+    "description": "Romantic Damask rose grounded by smoky musk.",
+    "image_src": "/images/product1_3.webp",
+    "image_alt": "Velvet Rose bottle",
+    "cta_href": "/product/velvet-rose-eau-de-parfum-50ml",
+    "image_right": false,
+    "order": 0,
+    "is_active": true
+  }
+},
+{
+  "model": "home.featuredproduct",
+  "pk": 2,
+  "fields": {
+    "eyebrow": "New",
+    "title": "Aqua Citrus Eau de Toilette",
+    "description": "A bright splash of bergamot and sea salt.",
+    "image_src": "/images/product2_3.webp",
+    "image_alt": "Aqua Citrus bottle",
+    "cta_href": "/product/aqua-citrus-eau-de-toilette-100ml",
+    "image_right": true,
+    "order": 1,
+    "is_active": true
+  }
+},
+{
+  "model": "home.banner",
+  "pk": 1,
+  "fields": {
+    "eyebrow": "Atelier story",
+    "title": "Slow-batched parfums, honest ingredients.",
+    "background_image": "/images/bg.webp",
+    "cta_label": "About Sinp",
+    "cta_href": "/about",
+    "updated_at": "2026-05-09T13:09:42.620Z"
+  }
+},
+{
+  "model": "home.bannerfeature",
+  "pk": 1,
+  "fields": {
+    "banner": 1,
+    "icon": "leaf",
+    "label": "Cruelty-free",
+    "order": 0
+  }
+},
+{
+  "model": "home.bannerfeature",
+  "pk": 2,
+  "fields": {
+    "banner": 1,
+    "icon": "globe",
+    "label": "Worldwide shipping",
+    "order": 1
+  }
+},
+{
+  "model": "home.bannerfeature",
+  "pk": 3,
+  "fields": {
+    "banner": 1,
+    "icon": "shield",
+    "label": "90-day aged",
+    "order": 2
+  }
+}
+]
