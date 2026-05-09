@@ -84,38 +84,56 @@ PostgreSQL:
 .venv/bin/pytest
 ```
 
-## API surface (high level)
+## API surface — frontend contract
+
+This BE is shaped to match the Next.js frontend exactly. All endpoints are
+under `/api`. URLs do **not** end with a trailing slash (`APPEND_SLASH=False`).
+
+### Response envelopes
+
+| Type    | Shape                                                              |
+| ------- | ------------------------------------------------------------------ |
+| List    | `{ data: T[], meta: { page, pageSize, totalItems, totalPages } }`  |
+| Single  | `{ data: T }`                                                      |
+| Error   | `{ error: { code, message, details? } }`                           |
+
+### Query params (list endpoints)
+
+| Param      | Notes                                                          |
+| ---------- | -------------------------------------------------------------- |
+| `page`     | 1-indexed                                                      |
+| `pageSize` | default 12, max 100                                            |
+| `sort`     | `default \| price_asc \| price_desc \| name_asc \| name_desc` |
+| `search`   | full-text search where supported                               |
 
 ### Public
 
-- `GET  /api/catalog/categories/`
-- `GET  /api/catalog/brands/`
-- `GET  /api/catalog/products/`            (filter, search, ordering, pagination)
-- `GET  /api/catalog/products/{slug}/`
-- `GET  /api/blog/categories/`
-- `GET  /api/blog/tags/`
-- `GET  /api/blog/posts/`
-- `GET  /api/blog/posts/{slug}/`
-- `GET  /api/pages/faqs/`
-- `GET  /api/pages/about/`
-- `POST /api/pages/contact/`
-- `POST /api/auth/register/`
-- `POST /api/auth/login/`                  (returns access + refresh)
-- `POST /api/auth/token/refresh/`
+- `POST /api/auth/register`         body: `{email, password, name}` → `{user, token}`
+- `POST /api/auth/login`            body: `{email, password}` → `{user, token}`
+- `GET  /api/products`              list of `Product`
+- `GET  /api/products/{slug}`       single `Product`
+- `GET  /api/blog`                  list of `BlogPost`
+- `GET  /api/blog/{slug}`           single `BlogPost`
+- `GET  /api/faq`                   list of `FaqItem`
+- `GET  /api/about`                 single `AboutContent` (body is `string[]`)
+- `POST /api/contact`               body: `{name, email, subject, message}`
+- `GET  /api/home/hero-slides`      list of `HeroSlide`
+- `GET  /api/home/featured-products`list of `FeaturedProductData`
+- `GET  /api/home/banner`           single `BannerData`
+- `GET  /api/home/products`         featured products for the homepage grid
+- `GET  /api/home/blog`             latest blog posts for the homepage
 
-### Auth required (JWT `Authorization: Bearer …`)
+### Auth required (JWT `Authorization: Bearer <token>`)
 
-- `GET/PATCH /api/auth/me/`
-- `GET    /api/cart/`
-- `POST   /api/cart/items/`
-- `PATCH  /api/cart/items/{id}/`
-- `DELETE /api/cart/items/{id}/`
-- `POST   /api/cart/clear/`
+- `GET  /api/auth/me`               → `{data: User}`
+- `GET  /api/orders`                list of own `Order`s
+- `POST /api/orders`                body: `{items:[{productId,productName,quantity,price}], shipping:{name,email,phone,address,city,zipCode}}` → `{data: Order}`
+- `GET  /api/orders/{orderNumber}`  single `Order`
+
+### Internal (kept for completeness; not consumed by the FE)
+
+- `GET/POST /api/cart/`, `/api/cart/items/...`
 - `GET/POST /api/wishlist/`
-- `DELETE /api/wishlist/{id}/`
-- `POST /api/orders/checkout/`
-- `GET  /api/orders/`
-- `GET  /api/orders/{number}/`
 
 ## Environment variables
 

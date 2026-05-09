@@ -35,7 +35,7 @@ def test_effective_price_uses_sale(product):
 
 
 @pytest.mark.django_db
-def test_product_list_returns_active_only(api_client, product):
+def test_product_list_envelope_and_active_only(api_client, product):
     Product.objects.create(
         category=product.category,
         name="Inactive",
@@ -45,13 +45,32 @@ def test_product_list_returns_active_only(api_client, product):
     )
     response = api_client.get(reverse("product-list"))
     assert response.status_code == 200
-    slugs = [p["slug"] for p in response.json()["results"]]
+    body = response.json()
+    assert "data" in body and "meta" in body
+    assert body["meta"]["page"] == 1
+    slugs = [p["slug"] for p in body["data"]]
     assert "velvet-rose" in slugs
     assert "inactive" not in slugs
+    item = next(p for p in body["data"] if p["slug"] == "velvet-rose")
+    assert item["price"] == 80.0
+    assert item["originalPrice"] == 100.0
+    assert item["available"] == 10
+    assert isinstance(item["id"], str)
 
 
 @pytest.mark.django_db
-def test_product_detail(api_client, product):
+def test_product_detail_envelope(api_client, product):
     response = api_client.get(reverse("product-detail", args=[product.slug]))
     assert response.status_code == 200
-    assert response.json()["sku"] == "SKU-001"
+    body = response.json()
+    assert "data" in body
+    assert body["data"]["slug"] == "velvet-rose"
+
+
+@pytest.mark.django_db
+def test_product_list_sort_param(api_client, category):
+    Product.objects.create(category=category, name="Cheap", sku="C", price=Decimal("10"))
+    Product.objects.create(category=category, name="Pricey", sku="P", price=Decimal("100"))
+    response = api_client.get(reverse("product-list") + "?sort=price_asc")
+    prices = [p["price"] for p in response.json()["data"]]
+    assert prices == sorted(prices)
