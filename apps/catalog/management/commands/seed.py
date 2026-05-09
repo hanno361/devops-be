@@ -294,6 +294,10 @@ class Command(BaseCommand):
             FAQ.objects.all().delete()
             TeamMember.objects.all().delete()
             AboutPage.objects.all().delete()
+            BannerFeature.objects.all().delete()
+            Banner.objects.all().delete()
+            FeaturedProduct.objects.all().delete()
+            HeroSlide.objects.all().delete()
 
         if not User.objects.filter(is_superuser=True).exists():
             User.objects.create_superuser(
