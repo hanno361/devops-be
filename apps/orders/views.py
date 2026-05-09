@@ -20,6 +20,8 @@ class OrderListCreateView(generics.ListCreateAPIView):
     ordering = ("-created_at",)
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Order.objects.none()
         return (
             Order.objects.filter(user=self.request.user).prefetch_related("items")
         )
@@ -44,6 +46,8 @@ class OrderDetailView(generics.RetrieveAPIView):
     lookup_field = "number"
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Order.objects.none()
         return Order.objects.filter(user=self.request.user).prefetch_related("items")
 
     def retrieve(self, request, *args, **kwargs):

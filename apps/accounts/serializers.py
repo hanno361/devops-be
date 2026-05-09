@@ -16,14 +16,14 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ("id", "email", "name", "avatarUrl")
 
-    def get_id(self, obj):
+    def get_id(self, obj) -> str:
         return str(obj.id)
 
-    def get_name(self, obj):
+    def get_name(self, obj) -> str:
         full = f"{obj.first_name} {obj.last_name}".strip()
         return full or obj.username
 
-    def get_avatarUrl(self, obj):
+    def get_avatarUrl(self, obj) -> str | None:
         return None
 
 

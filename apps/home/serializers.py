@@ -12,10 +12,10 @@ class HeroSlideSerializer(serializers.ModelSerializer):
         model = HeroSlide
         fields = ("id", "bg", "eyebrow", "title", "titleSpan", "body", "cta")
 
-    def get_id(self, obj):
+    def get_id(self, obj) -> str:
         return str(obj.id)
 
-    def get_cta(self, obj):
+    def get_cta(self, obj) -> dict:
         return {"label": obj.cta_label, "href": obj.cta_href}
 
 
@@ -39,7 +39,7 @@ class FeaturedProductSerializer(serializers.ModelSerializer):
             "imageRight",
         )
 
-    def get_id(self, obj):
+    def get_id(self, obj) -> str:
         return str(obj.id)
 
 

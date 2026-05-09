@@ -10,7 +10,7 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ("id", "name", "slug", "description")
 
-    def get_id(self, obj):
+    def get_id(self, obj) -> str:
         return str(obj.id)
 
 
@@ -21,7 +21,7 @@ class BrandSerializer(serializers.ModelSerializer):
         model = Brand
         fields = ("id", "name", "slug")
 
-    def get_id(self, obj):
+    def get_id(self, obj) -> str:
         return str(obj.id)
 
 
@@ -74,21 +74,21 @@ class ProductSerializer(serializers.ModelSerializer):
             "description",
         )
 
-    def get_id(self, obj):
+    def get_id(self, obj) -> str:
         return str(obj.id)
 
-    def get_price(self, obj):
+    def get_price(self, obj) -> float:
         return float(obj.effective_price)
 
-    def get_originalPrice(self, obj):
+    def get_originalPrice(self, obj) -> float | None:
         return float(obj.price) if obj.is_on_sale else None
 
-    def get_image(self, obj):
+    def get_image(self, obj) -> str:
         request = self.context.get("request")
         return _primary_image_url(obj, request)
 
-    def get_sold(self, obj):
-        return 0  # Placeholder until order analytics is wired in.
+    def get_sold(self, obj) -> int:
+        return 0
 
-    def get_badges(self, obj):
+    def get_badges(self, obj) -> list[dict]:
         return _badges(obj)

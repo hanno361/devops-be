@@ -217,7 +217,7 @@ TEAM = [
 
 HERO_SLIDES = [
     {
-        "bg": "/images/hero1.webp",
+        "bg": "/images/slide1.webp",
         "eyebrow": "New collection",
         "title": "Discover the",
         "title_span": "Velvet Rose",
@@ -226,7 +226,7 @@ HERO_SLIDES = [
         "cta_href": "/shop",
     },
     {
-        "bg": "/images/hero2.webp",
+        "bg": "/images/slide2.webp",
         "eyebrow": "Limited edition",
         "title": "Black",
         "title_span": "Vetiver",
@@ -241,7 +241,7 @@ FEATURED = [
         "eyebrow": "Best seller",
         "title": "Velvet Rose Eau de Parfum",
         "description": "Romantic Damask rose grounded by smoky musk.",
-        "image_src": "/images/featured1.webp",
+        "image_src": "/images/product1_3.webp",
         "image_alt": "Velvet Rose bottle",
         "cta_href": "/product/velvet-rose-eau-de-parfum-50ml",
         "image_right": False,
@@ -250,7 +250,7 @@ FEATURED = [
         "eyebrow": "New",
         "title": "Aqua Citrus Eau de Toilette",
         "description": "A bright splash of bergamot and sea salt.",
-        "image_src": "/images/featured2.webp",
+        "image_src": "/images/product2_3.webp",
         "image_alt": "Aqua Citrus bottle",
         "cta_href": "/product/aqua-citrus-eau-de-toilette-100ml",
         "image_right": True,
@@ -260,7 +260,7 @@ FEATURED = [
 BANNER = {
     "eyebrow": "Atelier story",
     "title": "Slow-batched parfums, honest ingredients.",
-    "background_image": "/images/banner.webp",
+    "background_image": "/images/bg.webp",
     "cta_label": "About Sinp",
     "cta_href": "/about",
     "features": [

@@ -19,6 +19,7 @@ class FAQListView(generics.ListAPIView):
 
 class AboutPageView(APIView):
     permission_classes = [permissions.AllowAny]
+    serializer_class = AboutPageSerializer
 
     def get(self, request):
         about = AboutPage.objects.first()

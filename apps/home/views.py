@@ -35,6 +35,7 @@ class FeaturedProductListView(generics.ListAPIView):
 
 class BannerView(APIView):
     permission_classes = [permissions.AllowAny]
+    serializer_class = BannerSerializer
 
     def get(self, request):
         banner = Banner.objects.prefetch_related("features").first()

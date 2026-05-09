@@ -22,6 +22,7 @@ class MyCartView(generics.RetrieveAPIView):
 
 class CartItemAddView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = CartItemSerializer
 
     def post(self, request):
         cart = _get_or_create_cart(request.user)
@@ -43,6 +44,7 @@ class CartItemAddView(APIView):
 
 class CartItemUpdateDeleteView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = CartItemSerializer
 
     def get_item(self, request, item_id):
         cart = _get_or_create_cart(request.user)
@@ -65,6 +67,7 @@ class CartItemUpdateDeleteView(APIView):
 
 class CartClearView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = CartSerializer
 
     def post(self, request):
         cart = _get_or_create_cart(request.user)

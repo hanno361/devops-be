@@ -10,7 +10,7 @@ class FAQSerializer(serializers.ModelSerializer):
         model = FAQ
         fields = ("id", "question", "answer")
 
-    def get_id(self, obj):
+    def get_id(self, obj) -> str:
         return str(obj.id)
 
 
@@ -21,7 +21,7 @@ class AboutPageSerializer(serializers.ModelSerializer):
         model = AboutPage
         fields = ("title", "intro", "body")
 
-    def get_body(self, obj):
+    def get_body(self, obj) -> list[str]:
         if not obj.body:
             return []
         return [p.strip() for p in obj.body.split("\n\n") if p.strip()]

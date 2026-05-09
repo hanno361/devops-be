@@ -23,17 +23,17 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "content",
         )
 
-    def get_id(self, obj):
+    def get_id(self, obj) -> str:
         return str(obj.id)
 
-    def get_date(self, obj):
+    def get_date(self, obj) -> str:
         target = obj.published_at or obj.created_at
         return target.strftime("%d %B, %Y")
 
-    def get_comments(self, obj):
-        return 0  # No commenting feature yet — return 0 to keep the FE happy.
+    def get_comments(self, obj) -> int:
+        return 0
 
-    def get_image(self, obj):
+    def get_image(self, obj) -> str:
         if not obj.cover:
             return ""
         request = self.context.get("request")

@@ -12,7 +12,7 @@ class OrderItemReadSerializer(serializers.ModelSerializer):
         model = OrderItem
         fields = ("productId", "productName", "quantity", "price")
 
-    def get_productId(self, obj):
+    def get_productId(self, obj) -> str:
         return str(obj.product_id) if obj.product_id else ""
 
 
@@ -27,10 +27,10 @@ class OrderReadSerializer(serializers.ModelSerializer):
         model = Order
         fields = ("id", "orderNumber", "date", "status", "totalPrice", "items")
 
-    def get_id(self, obj):
+    def get_id(self, obj) -> str:
         return str(obj.id)
 
-    def get_date(self, obj):
+    def get_date(self, obj) -> str:
         return obj.created_at.strftime("%d %B, %Y")
 
 
