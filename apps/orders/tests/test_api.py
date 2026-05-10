@@ -64,8 +64,8 @@ class TestOrderAPI:
         Order.objects.create(user=user, email=user.email, total=1500.0)
         Order.objects.create(user=user, email=user.email, total=2500.0)
         
-        # Sadece kendi siparişlerini getirmeli (README'ye göre sonuna slash koyarak)
-        response = client.get("/api/orders/")
+        # APPEND_SLASH=False olduğu için trailing slash YOK
+        response = client.get("/api/orders")
         
         assert response.status_code == 200
         
