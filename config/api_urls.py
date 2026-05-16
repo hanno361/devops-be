@@ -52,6 +52,9 @@ urlpatterns = [
 
     # Catalog
     path("products", ProductListView.as_view(), name="product-list"),
+    # Legacy alias: ops repo healthcheck targets /api/catalog/products/
+    # so it stays healthy without us touching the ops compose file.
+    path("catalog/products/", ProductListView.as_view(), name="product-list-legacy"),
     # Shop sidebar — must come BEFORE the slug catch-all
     path("products/categories", CategorySidebarView.as_view(), name="product-categories"),
     path("products/vendors", VendorSidebarView.as_view(), name="product-vendors"),
