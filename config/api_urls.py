@@ -7,8 +7,21 @@ from drf_spectacular.views import (
 )
 
 from apps.accounts.views import LoginView, MeView, RegisterView
-from apps.blog.views import BlogPostDetailView, BlogPostListView
-from apps.catalog.views import ProductDetailView, ProductListView
+from apps.blog.views import (
+    BlogArchiveView,
+    BlogPostDetailView,
+    BlogPostListView,
+    BlogTagListView,
+)
+from apps.catalog.views import (
+    CategorySidebarView,
+    ColorSidebarView,
+    ProductDetailView,
+    ProductListView,
+    SizeSidebarView,
+    TagSidebarView,
+    VendorSidebarView,
+)
 from apps.orders.views import OrderDetailView, OrderListCreateView
 from apps.home.views import (
     BannerView,
@@ -39,10 +52,18 @@ urlpatterns = [
 
     # Catalog
     path("products", ProductListView.as_view(), name="product-list"),
+    # Shop sidebar — must come BEFORE the slug catch-all
+    path("products/categories", CategorySidebarView.as_view(), name="product-categories"),
+    path("products/vendors", VendorSidebarView.as_view(), name="product-vendors"),
+    path("products/colors", ColorSidebarView.as_view(), name="product-colors"),
+    path("products/sizes", SizeSidebarView.as_view(), name="product-sizes"),
+    path("products/tags", TagSidebarView.as_view(), name="product-tags"),
     path("products/<slug:slug>", ProductDetailView.as_view(), name="product-detail"),
 
     # Blog
     path("blog", BlogPostListView.as_view(), name="blog-list"),
+    path("blog/tags", BlogTagListView.as_view(), name="blog-tags"),
+    path("blog/archive", BlogArchiveView.as_view(), name="blog-archive"),
     path("blog/<slug:slug>", BlogPostDetailView.as_view(), name="blog-detail"),
 
     # Pages

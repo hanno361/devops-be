@@ -1,28 +1,16 @@
 from rest_framework import serializers
 
-from .models import Brand, Category, Product, ProductImage
-
-
-class CategorySerializer(serializers.ModelSerializer):
-    id = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Category
-        fields = ("id", "name", "slug", "description")
-
-    def get_id(self, obj) -> str:
-        return str(obj.id)
-
-
-class BrandSerializer(serializers.ModelSerializer):
-    id = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Brand
-        fields = ("id", "name", "slug")
-
-    def get_id(self, obj) -> str:
-        return str(obj.id)
+from .models import (
+    Brand,
+    Category,
+    Color,
+    Product,
+    ProductImage,
+    Size,
+    Tag,
+    Theme,
+    Vendor,
+)
 
 
 def _primary_image_url(obj, request):
@@ -39,7 +27,10 @@ def _badges(obj):
     badges = []
     if obj.is_on_sale:
         badges.append({"label": "Sale", "variant": "sale"})
-        discount = int(round((1 - float(obj.sale_price) / float(obj.price)) * 100))
+        try:
+            discount = int(round((1 - float(obj.sale_price) / float(obj.price)) * 100))
+        except (TypeError, ZeroDivisionError):
+            discount = 0
         if discount:
             badges.append({"label": f"-{discount}%", "variant": "default"})
     elif obj.is_featured:
@@ -47,8 +38,60 @@ def _badges(obj):
     return badges
 
 
+# ─── Sidebar / list serializers ─────────────────────────────────────────
+
+
+class ThemeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Theme
+        fields = ("name", "slug")
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    count = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Category
+        fields = ("name", "slug", "count")
+
+
+class BrandSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Brand
+        fields = ("name", "slug")
+
+
+class VendorSerializer(serializers.ModelSerializer):
+    count = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Vendor
+        fields = ("name", "slug", "count")
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ("name", "slug")
+
+
+class SizeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Size
+        fields = ("name", "slug")
+
+
+class ColorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Color
+        fields = ("name", "value", "hex")
+
+
+# ─── Product serializer ─────────────────────────────────────────────────
+
+
 class ProductSerializer(serializers.ModelSerializer):
-    """FE-aligned Product shape: id is string, price is the effective price,
+    """FE-aligned product shape: id is string, price is the effective price,
     originalPrice (camelCase) holds the strike-through value when on sale."""
 
     id = serializers.SerializerMethodField()
@@ -58,6 +101,8 @@ class ProductSerializer(serializers.ModelSerializer):
     sold = serializers.SerializerMethodField()
     available = serializers.IntegerField(source="stock", read_only=True)
     badges = serializers.SerializerMethodField()
+    theme = serializers.SlugRelatedField(slug_field="slug", read_only=True)
+    category = serializers.SlugRelatedField(slug_field="slug", read_only=True)
 
     class Meta:
         model = Product
@@ -72,6 +117,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "available",
             "badges",
             "description",
+            "theme",
+            "category",
         )
 
     def get_id(self, obj) -> str:
