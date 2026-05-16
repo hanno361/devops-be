@@ -16,13 +16,22 @@ from .serializers import (
     HeroSlideSerializer,
 )
 
+# Themes are URL slugs we accept on every home endpoint.
+DEFAULT_THEME = "airpod"
+
+
+def _theme(request) -> str:
+    return request.query_params.get("theme", DEFAULT_THEME)
+
 
 class HeroSlideListView(generics.ListAPIView):
     serializer_class = HeroSlideSerializer
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        return HeroSlide.objects.filter(is_active=True)
+        return HeroSlide.objects.filter(
+            is_active=True, theme__slug=_theme(self.request)
+        )
 
 
 class FeaturedProductListView(generics.ListAPIView):
@@ -30,7 +39,9 @@ class FeaturedProductListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        return FeaturedProduct.objects.filter(is_active=True)
+        return FeaturedProduct.objects.filter(
+            is_active=True, theme__slug=_theme(self.request)
+        )
 
 
 class BannerView(APIView):
@@ -38,9 +49,13 @@ class BannerView(APIView):
     serializer_class = BannerSerializer
 
     def get(self, request):
-        banner = Banner.objects.prefetch_related("features").first()
+        banner = (
+            Banner.objects.prefetch_related("features")
+            .filter(theme__slug=_theme(request))
+            .first()
+        )
         if not banner:
-            raise NotFound("Banner not configured.")
+            raise NotFound("Banner not configured for this theme.")
         return Response({"data": BannerSerializer(banner).data})
 
 
@@ -50,8 +65,12 @@ class HomeProductsView(generics.ListAPIView):
 
     def get_queryset(self):
         return (
-            Product.objects.filter(is_active=True, is_featured=True)
-            .select_related("category", "brand")
+            Product.objects.filter(
+                is_active=True,
+                is_featured=True,
+                theme__slug=_theme(self.request),
+            )
+            .select_related("theme", "category", "brand", "vendor")
             .prefetch_related(
                 Prefetch(
                     "images",
